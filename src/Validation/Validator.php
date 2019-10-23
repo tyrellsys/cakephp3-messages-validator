@@ -121,6 +121,13 @@ class Validator extends CakeValidator
         }
         $args[0] = __d($this->_i18nDomain, $args[0]);
 
+        // not support array values
+        foreach ($args as $no => $arg) {
+            if (is_array($arg)) {
+                $args[$no] = null;
+            }
+        }
+
         return __d($this->_i18nDomain, $message, ...$args);
     }
 }
