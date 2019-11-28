@@ -25,6 +25,10 @@ class Validator extends CakeValidator
      */
     public function getRequiredMessage($field)
     {
+        if (isset($this->_presenceMessages[$field])) {
+            return $this->_presenceMessages[$field];
+        }
+        
         $message = $this->getMessage('required', [$field]);
         if ($message) {
             return $message;
@@ -42,6 +46,10 @@ class Validator extends CakeValidator
      */
     public function getNotEmptyMessage($field)
     {
+        if (isset($this->_allowEmptyMessages[$field])) {
+            return $this->_allowEmptyMessages[$field];
+        }
+        
         $message = $this->getMessage('notEmpty', [$field]);
         if ($message) {
             return $message;
