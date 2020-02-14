@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Tyrellsys\CakePHP3MessagesValidator\Test\TestCase\Validation;
 
 use Cake\Core\Configure;
@@ -11,7 +13,7 @@ class ValidatorTest extends TestCase
     protected $Validator;
     protected $locale;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -22,7 +24,7 @@ class ValidatorTest extends TestCase
         I18n::setLocale('not exists locale');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
@@ -40,15 +42,15 @@ class ValidatorTest extends TestCase
         $this->Validator
             ->requirePresence('column')
             ->maxLength('column', 2)
-            ->notEmpty('column');
+            ->notEmptyString('column');
 
-        $errors = $this->Validator->errors([]);
+        $errors = $this->Validator->validate([]);
         $this->assertEquals('This field is required', $errors['column']['_required']);
 
-        $errors = $this->Validator->errors(['column' => '']);
+        $errors = $this->Validator->validate(['column' => '']);
         $this->assertEquals('This field cannot be left empty', $errors['column']['_empty']);
 
-        $errors = $this->Validator->errors(['column' => 'abc']);
+        $errors = $this->Validator->validate(['column' => 'abc']);
         $this->assertEquals('The provided value is invalid', $errors['column']['maxLength']);
     }
 
@@ -61,9 +63,9 @@ class ValidatorTest extends TestCase
     {
         $this->Validator
             ->scalar('column') // call Validation::isScalar()
-            ->allowEmpty('column');
+            ->allowEmptyString('column');
 
-        $errors = $this->Validator->errors(['column' => ['aaa']]);
+        $errors = $this->Validator->validate(['column' => ['aaa']]);
         // not ValidationName
         $this->assertEquals('The provided value is invalid', $errors['column']['scalar']);
     }
@@ -84,15 +86,15 @@ class ValidatorTest extends TestCase
         $this->Validator
             ->requirePresence('column')
             ->maxLength('column', 2)
-            ->notEmpty('column');
+            ->notEmptyString('column');
 
-        $errors = $this->Validator->errors([]);
+        $errors = $this->Validator->validate([]);
         $this->assertEquals('required!!', $errors['column']['_required']);
 
-        $errors = $this->Validator->errors(['column' => '']);
+        $errors = $this->Validator->validate(['column' => '']);
         $this->assertEquals('notEmpty!!', $errors['column']['_empty']);
 
-        $errors = $this->Validator->errors(['column' => 'abc']);
+        $errors = $this->Validator->validate(['column' => 'abc']);
         $this->assertEquals('maxLength!! less than 2', $errors['column']['maxLength']);
     }
 }

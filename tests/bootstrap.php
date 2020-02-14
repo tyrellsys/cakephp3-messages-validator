@@ -1,5 +1,5 @@
 <?php
-use Cake\Datasource\ConnectionManager;
+declare(strict_types=1);
 
 $findRoot = function ($root) {
     do {
