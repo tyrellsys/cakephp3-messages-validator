@@ -112,4 +112,100 @@ class Validator extends CakeValidator
 
         return __d($this->_i18nDomain, $message, ...$args);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function allowEmptyString(string $field, ?string $message = null, $when = true)
+    {
+        return parent::allowEmptyString($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function notEmptyString(string $field, ?string $message = null, $when = false)
+    {
+        return parent::notEmptyString($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function allowEmptyArray(string $field, ?string $message = null, $when = true)
+    {
+        return parent::allowEmptyArray($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function notEmptyArray(string $field, ?string $message = null, $when = false)
+    {
+        return parent::notEmptyArray($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function allowEmptyFile(string $field, ?string $message = null, $when = true)
+    {
+        return parent::allowEmptyFile($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function notEmptyFile(string $field, ?string $message = null, $when = false)
+    {
+        return parent::notEmptyFile($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function allowEmptyDate(string $field, ?string $message = null, $when = true)
+    {
+        return parent::allowEmptyDate($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function notEmptyDate(string $field, ?string $message = null, $when = false)
+    {
+        return parent::notEmptyDate($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function allowEmptyDatetime(string $field, ?string $message = null, $when = true)
+    {
+        return parent::allowEmptyDatetime($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function notEmptyDatetime(string $field, ?string $message = null, $when = false)
+    {
+        return parent::notEmptyDatetime($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function allowEmptyTime(string $field, ?string $message = null, $when = true)
+    {
+        return parent::allowEmptyTime($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function notEmptyTime(string $field, ?string $message = null, $when = false)
+    {
+        return parent::notEmptyTime($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
 }
