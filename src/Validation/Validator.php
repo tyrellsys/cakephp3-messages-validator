@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Tyrellsys\CakePHP3MessagesValidator\Validation;
 
 use Cake\Core\Configure;
@@ -17,18 +19,14 @@ class Validator extends CakeValidator
     protected $_configureKeyPrefix = 'messagesValidator.messages';
 
     /**
-     * Gets the required message for a field
-     * override method
-     *
-     * @param string $field Field name
-     * @return string|null
+     * {@inheritDoc}
      */
-    public function getRequiredMessage($field)
+    public function getRequiredMessage(string $field): ?string
     {
         if (isset($this->_presenceMessages[$field])) {
             return $this->_presenceMessages[$field];
         }
-        
+
         $message = $this->getMessage('required', [$field]);
         if ($message) {
             return $message;
@@ -38,18 +36,14 @@ class Validator extends CakeValidator
     }
 
     /**
-     * Gets the notEmpty message for a field
-     * override metho
-     *
-     * @param string $field Field name
-     * @return string|null
+     * {@inheritDoc}
      */
-    public function getNotEmptyMessage($field)
+    public function getNotEmptyMessage(string $field): ?string
     {
         if (isset($this->_allowEmptyMessages[$field])) {
             return $this->_allowEmptyMessages[$field];
         }
-        
+
         $message = $this->getMessage('notEmpty', [$field]);
         if ($message) {
             return $message;
@@ -59,30 +53,9 @@ class Validator extends CakeValidator
     }
 
     /**
-     * Adds a new rule to a field's rule set. If second argument is an array
-     * then rules list for the field will be replaced with second argument and
-     * third argument will be ignored.
-     *
-     * ### Example:
-     *
-     * ```
-     *      $validator
-     *          ->add('title', 'required', ['rule' => 'notBlank'])
-     *          ->add('user_id', 'valid', ['rule' => 'numeric', 'message' => 'Invalid User'])
-     *
-     *      $validator->add('password', [
-     *          'size' => ['rule' => ['lengthBetween', 8, 20]],
-     *          'hasSpecialCharacter' => ['rule' => 'validateSpecialchar', 'message' => 'not valid']
-     *      ]);
-     * ```
-     * override method
-     *
-     * @param string $field The name of the field from which the rule will be added
-     * @param array|string $name The alias for a single rule or multiple rules array
-     * @param array|\Cake\Validation\ValidationRule $rule the rule to add
-     * @return $this
+     * {@inheritDoc}
      */
-    public function add($field, $name, $rule = [])
+    public function add(string $field, $name, $rule = [])
     {
         if (!is_array($name)) {
             $rules = [$name => $rule];
@@ -122,9 +95,10 @@ class Validator extends CakeValidator
      * @param array $args args
      * @return string|null
      */
-    public function getMessage($validationName, $args)
+    public function getMessage(string $validationName, array $args = [])
     {
-        if (!$message = Configure::read($this->_configureKeyPrefix . '.' . $validationName)) {
+        $message = Configure::read($this->_configureKeyPrefix . '.' . $validationName);
+        if (!$message) {
             return null;
         }
         $args[0] = __d($this->_i18nDomain, $args[0]);
@@ -137,5 +111,101 @@ class Validator extends CakeValidator
         }
 
         return __d($this->_i18nDomain, $message, ...$args);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function allowEmptyString(string $field, ?string $message = null, $when = true)
+    {
+        return parent::allowEmptyString($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function notEmptyString(string $field, ?string $message = null, $when = false)
+    {
+        return parent::notEmptyString($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function allowEmptyArray(string $field, ?string $message = null, $when = true)
+    {
+        return parent::allowEmptyArray($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function notEmptyArray(string $field, ?string $message = null, $when = false)
+    {
+        return parent::notEmptyArray($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function allowEmptyFile(string $field, ?string $message = null, $when = true)
+    {
+        return parent::allowEmptyFile($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function notEmptyFile(string $field, ?string $message = null, $when = false)
+    {
+        return parent::notEmptyFile($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function allowEmptyDate(string $field, ?string $message = null, $when = true)
+    {
+        return parent::allowEmptyDate($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function notEmptyDate(string $field, ?string $message = null, $when = false)
+    {
+        return parent::notEmptyDate($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function allowEmptyDatetime(string $field, ?string $message = null, $when = true)
+    {
+        return parent::allowEmptyDatetime($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function notEmptyDatetime(string $field, ?string $message = null, $when = false)
+    {
+        return parent::notEmptyDatetime($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function allowEmptyTime(string $field, ?string $message = null, $when = true)
+    {
+        return parent::allowEmptyTime($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function notEmptyTime(string $field, ?string $message = null, $when = false)
+    {
+        return parent::notEmptyTime($field, $message ?? $this->getMessage(__FUNCTION__, [$field]), $when);
     }
 }
